@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import {
   IconCalendar,
@@ -7,37 +8,47 @@ import {
   IconPerson,
   IconPhone,
 } from "../common/Icons";
+import getInfo from "../services/api";
+import Information from "./Information";
 
 export default function BussinessCard() {
+  const [imagePerfil, setImagePerfil] = useState("");
+  const [isInfo, setIsInfo] = useState("user");
+
+  useEffect(() => {
+    getInfo()
+      .then((response) => {
+        const result = response.data.results[0];
+        setImagePerfil(result.picture.large);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Wrapper>
       <ImgDiv>
-        <img
-          src="https://randomuser.me/api/portraits/women/3.jpg"
-          alt="perfil"
-        />
+        <img src={imagePerfil} alt="perfil" />
       </ImgDiv>
 
-      <p>Hi, My name is</p>
-      <h1>Mrs Matilde Hoiberg</h1>
+      <Information isInfo={isInfo} />
 
       <Icons>
-        <li>
+        <li onMouseEnter={() => setIsInfo("user")}>
           <IconPerson />
         </li>
-        <li>
+        <li onMouseEnter={() => setIsInfo("email")}>
           <IconEmail />
         </li>
-        <li>
+        <li onMouseEnter={() => setIsInfo("birthday")}>
           <IconCalendar fontSize={"25px"} />
         </li>
-        <li>
+        <li onMouseEnter={() => setIsInfo("location")}>
           <IconLocation />
         </li>
-        <li>
+        <li onMouseEnter={() => setIsInfo("phone")}>
           <IconPhone fontSize={"25px"} />
         </li>
-        <li>
+        <li onMouseEnter={() => setIsInfo("password")}>
           <IconLock />
         </li>
       </Icons>
