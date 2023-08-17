@@ -70,6 +70,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   border-radius: 4px;
   position: relative;
+  text-align: center;
 
   &::before {
     content: "";
