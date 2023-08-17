@@ -65,23 +65,33 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 100%;
+    heigth: 2px;
+    color: black;
+    top: 120px;
+    position: absolute;
+    border-top: 1px solid #999999;
+  }
 
   p {
     font-size: 18px;
     color: #999999;
-    margin-bottom: 0;
   }
 
   h1 {
     font-size: 38px;
     color: #2c2e31;
-    font-family: Ubuntu, sans-serif;
   }
 
   img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    z-index: 2;
   }
 `;
 
@@ -122,4 +132,5 @@ const ImgDiv = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid gray;
+  z-index: 2;
 `;
