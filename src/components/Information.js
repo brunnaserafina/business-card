@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import getInfo from "../services/api";
 
 export default function Information({ isInfo }) {
@@ -17,8 +18,10 @@ export default function Information({ isInfo }) {
           `${result.name.title} ${result.name.first} ${result.name.last}`
         );
         setEmail(result.email);
-        setBirthday(result.dob.date);
-        setAddress(`${result.location.poscode} ${result.location.city} Ct`);
+        setBirthday(format(new Date(result.dob.date), "dd/MM/yyyy"));
+        setAddress(
+          `${result.location.street.number} ${result.location.street.name}`
+        );
         setPhone(result.phone);
         setPassword(result.login.password);
       })
