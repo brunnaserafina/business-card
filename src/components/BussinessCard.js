@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import {
   IconCalendar,
@@ -14,6 +14,16 @@ import Information from "./Information";
 export default function BussinessCard() {
   const [imagePerfil, setImagePerfil] = useState("");
   const [isInfo, setIsInfo] = useState("user");
+  const [color, setColor] = useState("user");
+
+  const iconData = [
+    { key: "user", icon: IconPerson },
+    { key: "email", icon: IconEmail },
+    { key: "birthday", icon: IconCalendar, fontSize: "25px" },
+    { key: "location", icon: IconLocation },
+    { key: "phone", icon: IconPhone, fontSize: "25px" },
+    { key: "password", icon: IconLock },
+  ];
 
   useEffect(() => {
     getInfo()
@@ -33,24 +43,18 @@ export default function BussinessCard() {
       <Information isInfo={isInfo} />
 
       <Icons>
-        <li onMouseEnter={() => setIsInfo("user")}>
-          <IconPerson />
-        </li>
-        <li onMouseEnter={() => setIsInfo("email")}>
-          <IconEmail />
-        </li>
-        <li onMouseEnter={() => setIsInfo("birthday")}>
-          <IconCalendar fontSize={"25px"} />
-        </li>
-        <li onMouseEnter={() => setIsInfo("location")}>
-          <IconLocation />
-        </li>
-        <li onMouseEnter={() => setIsInfo("phone")}>
-          <IconPhone fontSize={"25px"} />
-        </li>
-        <li onMouseEnter={() => setIsInfo("password")}>
-          <IconLock />
-        </li>
+        {iconData.map((item, index) => (
+          <Li
+            key={item.index}
+            onMouseEnter={() => {
+              setIsInfo(item.key);
+              setColor(item.key);
+            }}
+            isColor={color === item.key}
+          >
+            <item.icon fontSize={item.fontSize} />
+          </Li>
+        ))}
       </Icons>
     </Wrapper>
   );
@@ -63,7 +67,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   border-radius: 4px;
   position: relative;
 
@@ -71,15 +75,15 @@ const Wrapper = styled.div`
     content: "";
     width: 100%;
     heigth: 2px;
-    color: black;
-    top: 120px;
+    top: 140px;
     position: absolute;
-    border-top: 1px solid #999999;
+    border-top: 1px solid #9999;
   }
 
   p {
     font-size: 18px;
     color: #999999;
+    margin-bottom: 5px;
   }
 
   h1 {
@@ -93,6 +97,14 @@ const Wrapper = styled.div`
     border-radius: 50%;
     z-index: 2;
   }
+
+  @media (max-width: 800px) {
+    width: 90vw;
+
+    h1 {
+      font-size: 25px;
+    }
+  }
 `;
 
 const Icons = styled.ul`
@@ -101,26 +113,34 @@ const Icons = styled.ul`
   display: flex;
   width: 80%;
   justify-content: space-evenly;
+`;
 
-  li {
-    list-style-type: none;
-    position: relative;
-  }
+const Li = styled.li`
+  list-style-type: none;
+  position: relative;
+  color: ${(props) => (props.isColor ? "#83ba43" : "#9999")};
+  display: flex;
+  justify-content: center;
 
-  li:hover {
-    color: #83ba43;
+  &:hover {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
 
-  li:hover::before {
-    content: "--";
-    position: absolute;
-    top: -20px;
-  }
+  ${(props) =>
+    props.isColor &&
+    `
+    &::before {
+      content: "-";
+      position: absolute;
+      top: -20px;
+      text-align: center;
+    }
+  `}
 `;
 
 const ImgDiv = styled.div`
@@ -131,6 +151,6 @@ const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  border: 1px solid #9999;
   z-index: 2;
 `;

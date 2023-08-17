@@ -14,9 +14,8 @@ export default function Information({ isInfo }) {
     getInfo()
       .then((response) => {
         const result = response.data.results[0];
-        setName(
-          `${result.name.title} ${result.name.first} ${result.name.last}`
-        );
+
+        setName(`${result.name.first} ${result.name.last}`);
         setEmail(result.email);
         setBirthday(format(new Date(result.dob.date), "dd/MM/yyyy"));
         setAddress(
@@ -29,48 +28,26 @@ export default function Information({ isInfo }) {
   }, []);
 
   return (
-    <>
-      {isInfo === "user" && (
-        <>
-          <p>My name is</p>
-          <h1>{name}</h1>
-        </>
-      )}
+    <div>
+      <p>
+        {isInfo === "user" ? "Hi, My" : "My"}
+        {isInfo === "user" && " name "}
+        {isInfo === "email" && " email address "}
+        {isInfo === "birthday" && " birthday "}
+        {isInfo === "location" && " address "}
+        {isInfo === "phone" && " phone number "}
+        {isInfo === "password" && " password "}
+        is
+      </p>
 
-      {isInfo === "email" && (
-        <>
-          <p>My email address is</p>
-          <h1>{email}</h1>
-        </>
-      )}
-
-      {isInfo === "birthday" && (
-        <>
-          <p>My birthday is</p>
-          <h1>{birthday}</h1>
-        </>
-      )}
-
-      {isInfo === "location" && (
-        <>
-          <p>My address is</p>
-          <h1>{address}</h1>
-        </>
-      )}
-
-      {isInfo === "phone" && (
-        <>
-          <p>My phone number is</p>
-          <h1>{phone}</h1>
-        </>
-      )}
-
-      {isInfo === "password" && (
-        <>
-          <p>My password is</p>
-          <h1>{password}</h1>
-        </>
-      )}
-    </>
+      <h1>
+        {isInfo === "user" && name}
+        {isInfo === "email" && email}
+        {isInfo === "birthday" && birthday}
+        {isInfo === "location" && address}
+        {isInfo === "phone" && phone}
+        {isInfo === "password" && password}
+      </h1>
+    </div>
   );
 }
