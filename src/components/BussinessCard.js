@@ -122,6 +122,7 @@ const Li = styled.li`
   color: ${(props) => (props.isColor ? "#83ba43" : "#9999")};
   display: flex;
   justify-content: center;
+  opacity: ${(props) => (props.isColor ? 1 : 0.7)};
 
   &:hover {
     cursor: pointer;
@@ -130,6 +131,8 @@ const Li = styled.li`
     justify-content: center;
     align-items: center;
     text-align: center;
+    transform: translateY(-5px);
+    opacity: 1;
   }
 
   ${(props) =>
